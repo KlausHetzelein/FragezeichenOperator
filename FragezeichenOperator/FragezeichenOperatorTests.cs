@@ -1,5 +1,5 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Security.Principal;
+﻿using System.Security.Principal;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace FragezeichenOperator
 {
@@ -9,7 +9,7 @@ namespace FragezeichenOperator
         [TestMethod]
         public void UseQuestionmarkOperatorNotAtAll()
         {
-            string name = GetNameTheClassicalWay(WindowsIdentity.GetCurrent());
+            string name = WindowsIdentityHelper.GetNameTheClassicalWay(WindowsIdentity.GetCurrent());
 
             Assert.IsNotNull(name);
         }
@@ -17,7 +17,7 @@ namespace FragezeichenOperator
         [TestMethod]
         public void UseQuestionmarkOperatorSingleOne()
         {
-            string name = GetNameUsingQmOperator(WindowsIdentity.GetCurrent());
+            string name = WindowsIdentityHelper.GetNameUsingQmOperator(WindowsIdentity.GetCurrent());
 
             Assert.IsNotNull(name);
         }
@@ -25,7 +25,7 @@ namespace FragezeichenOperator
         [TestMethod]
         public void UseQuestionmarkOperatorSingleOneWithNullReference()
         {
-            string name = GetNameUsingQmOperator(null);
+            string name = WindowsIdentityHelper.GetNameUsingQmOperator(null);
 
             Assert.IsNotNull(name);
         }
@@ -46,22 +46,5 @@ namespace FragezeichenOperator
             Assert.IsNotNull(name);
         }
 
-        private string GetNameTheClassicalWay(WindowsIdentity windowsIdentity)
-        {
-            // the classic way
-            if (null != windowsIdentity)
-            {
-                if (null != windowsIdentity.User)
-                {
-                    return windowsIdentity.User.ToString();
-                }
-            }
-
-            return null;
-        }
-        private string GetNameUsingQmOperator(WindowsIdentity windowsIdentity)
-        {
-            return windowsIdentity?.Name?.ToString() ?? string.Empty;
-        }
     }
 }
